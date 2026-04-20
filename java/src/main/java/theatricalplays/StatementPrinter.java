@@ -30,8 +30,11 @@ public class StatementPrinter {
     private static int volumeCreditsFor(Performance perf, int result, Play play) {
         // add volume credits
         result += Math.max(perf.audience - 30, 0);
-        // add extra credit for every ten comedy attendees
-        if ("comedy".equals(play.type)) result += Math.floor(perf.audience / 5);
+        // add extra credit for every five comedy attendees
+        if ("comedy".equals(play.type)) {
+            // Standard integer division truncates decimals, effectively "flooring" positive results
+            result += perf.audience / 5;
+        }
         return result;
     }
 
