@@ -27,12 +27,12 @@ public class StatementPrinter {
         return result;
     }
 
-    private static int volumeCreditsFor(Performance perf, int volumeCredits, Play play) {
+    private static int volumeCreditsFor(Performance perf, int result, Play play) {
         // add volume credits
-        volumeCredits += Math.max(perf.audience - 30, 0);
+        result += Math.max(perf.audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy".equals(play.type)) volumeCredits += Math.floor(perf.audience / 5);
-        return volumeCredits;
+        if ("comedy".equals(play.type)) result += Math.floor(perf.audience / 5);
+        return result;
     }
 
     private static int amountFor(Performance perf, Play play) {
