@@ -39,25 +39,20 @@ public class StatementPrinter {
     }
 
     private static int amountFor(Performance perf, Play play) {
-        int result;
-        switch (play.type) {
-            case "tragedy":
-                result = 40000;
-                if (perf.audience > 30) {
-                    result += 1000 * (perf.audience - 30);
-                }
-                break;
-            case "comedy":
-                result = 30000;
+        return switch (play.type) {
+            case "tragedy" -> {
+                int base = 40_000;
+                yield perf.audience > 30 ? base + 1000 * (perf.audience - 30) : base;
+            }
+            case "comedy" -> {
+                int base = 30_000;
                 if (perf.audience > 20) {
-                    result += 10000 + 500 * (perf.audience - 20);
+                    base += 10_000 + 500 * (perf.audience - 20);
                 }
-                result += 300 * perf.audience;
-                break;
-            default:
-                throw new Error("unknown type: %s".formatted(play.type));
-        }
-        return result;
+                yield base + 300 * perf.audience;
+            }
+            default -> throw new Error("unknown type: %s".formatted(play.type));
+        };
     }
 
 }
