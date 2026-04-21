@@ -51,7 +51,7 @@ public class StatementPrinter {
                 }
                 yield base + 300 * perf.audience;
             }
-            default -> throw new Error("unknown type: %s".formatted(play.type));
+            default -> throw new IllegalArgumentException("unknown type: %s".formatted(play.type));
         };
     }
 

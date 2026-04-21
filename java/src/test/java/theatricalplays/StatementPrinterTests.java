@@ -32,7 +32,7 @@ class StatementPrinterTests {
     @Test
     void statementWithNewPlayTypes() {
         Map<String, Play> plays = Map.of(
-                "henry-v",  new Play("Henry V", "history"),
+                "henry-v", new Play("Henry V", "history"),
                 "as-like", new Play("As You Like It", "pastoral"));
 
         Invoice invoice = new Invoice("BigCo", List.of(
@@ -40,8 +40,12 @@ class StatementPrinterTests {
                 new Performance("as-like", 55)));
 
         StatementPrinter statementPrinter = new StatementPrinter();
-        Error error = Assertions.assertThrows(Error.class,
-            () -> statementPrinter.print(invoice, plays));
-        assertEquals("unknown type: history", error.getMessage());
+
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> statementPrinter.print(invoice, plays)
+        );
+
+        assertEquals("unknown type: history", exception.getMessage());
     }
 }
