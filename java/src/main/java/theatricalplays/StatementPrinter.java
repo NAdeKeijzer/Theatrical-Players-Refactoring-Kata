@@ -1,6 +1,7 @@
 package theatricalplays;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -8,11 +9,11 @@ public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
         StatementData statementData = new StatementData(invoice, plays);
-        StringBuilder result = new StringBuilder(String.format("Statement for %s%n", invoice.customer));
+        StringBuilder result = new StringBuilder(String.format("Statement for %s%n", statementData.getInvoice().customer));
 
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
-        for (var perf : invoice.performances) {
+        for (var perf : getPerformances(statementData)) {
             // print line for this order
             result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amountFor(perf, playForPerformance(plays, perf))), perf.audience));
         }
@@ -20,6 +21,10 @@ public class StatementPrinter {
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(statementData) / 100)));
         result.append(String.format("You earned %s credits%n", totalVolumeCredits(statementData)));
         return result.toString();
+    }
+
+    private static List<Performance> getPerformances(StatementData statementData) {
+        return statementData.getInvoice().performances;
     }
 
     private static int totalAmountFor(StatementData statementData) {
@@ -32,7 +37,7 @@ public class StatementPrinter {
 
     private static int totalVolumeCredits(StatementData statementData) {
         var volumeCredits = 0;
-        for (var perf : statementData.getInvoice().performances) {
+        for (var perf : getPerformances(statementData)) {
 
             volumeCredits += volumeCreditsFor(perf, playForPerformance(statementData.getPlays(), perf));
         }
