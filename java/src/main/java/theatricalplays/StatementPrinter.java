@@ -18,7 +18,8 @@ public class StatementPrinter {
             volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
 
             // print line for this order
-            result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, frmt.format(amountFor(perf, playForPerformance(plays, perf)) / 100), perf.audience));
+            int amount = amountFor(perf, playForPerformance(plays, perf));
+            result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience));
             totalAmount += amountFor(perf, playForPerformance(plays, perf));
         }
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmount / 100)));
@@ -57,6 +58,9 @@ public class StatementPrinter {
             }
             default -> throw new IllegalArgumentException("unknown type: %s".formatted(play.type));
         };
+    }
+    private static String formatAsUSD(NumberFormat frmt, int amount) {
+        return frmt.format(amount / 100);
     }
 
 }
