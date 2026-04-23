@@ -7,6 +7,7 @@ import java.util.Map;
 public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
+        StatementData statementData = new StatementData(invoice, plays);
         StringBuilder result = new StringBuilder(String.format("Statement for %s%n", invoice.customer));
 
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
@@ -16,8 +17,8 @@ public class StatementPrinter {
             result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amountFor(perf, playForPerformance(plays, perf))), perf.audience));
         }
 
-        result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(new StatementData(invoice, plays)) / 100)));
-        result.append(String.format("You earned %s credits%n", totalVolumeCredits(new StatementData(invoice, plays))));
+        result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(statementData) / 100)));
+        result.append(String.format("You earned %s credits%n", totalVolumeCredits(statementData)));
         return result.toString();
     }
 
