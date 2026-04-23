@@ -16,9 +16,8 @@ public class StatementPrinter {
             int amount = amountFor(perf, playForPerformance(plays, perf));
             result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience));
         }
-        var totalAmount = totalAmountFor(invoice, plays);
 
-        result.append(String.format("Amount owed is %s%n", frmt.format(totalAmount / 100)));
+        result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(invoice, plays) / 100)));
         result.append(String.format("You earned %s credits%n", totalVolumeCredits(invoice, plays)));
         return result.toString();
     }
