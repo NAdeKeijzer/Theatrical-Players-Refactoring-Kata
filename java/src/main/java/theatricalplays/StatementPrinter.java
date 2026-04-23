@@ -7,21 +7,22 @@ import java.util.Map;
 public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
-        var totalAmount = 0;
         StringBuilder result = new StringBuilder(String.format("Statement for %s%n", invoice.customer));
 
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
-        var volumeCredits = totalVolumeCredits(invoice, plays);
         for (var perf : invoice.performances) {
             // print line for this order
             int amount = amountFor(perf, playForPerformance(plays, perf));
             result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience));
+        }
+        var totalAmount = 0;
+        for (var perf : invoice.performances) {
             totalAmount += amountFor(perf, playForPerformance(plays, perf));
         }
 
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmount / 100)));
-        result.append(String.format("You earned %s credits%n", volumeCredits));
+        result.append(String.format("You earned %s credits%n", totalVolumeCredits(invoice, plays)));
         return result.toString();
     }
 
