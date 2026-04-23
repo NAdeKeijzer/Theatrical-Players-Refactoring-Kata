@@ -13,8 +13,7 @@ public class StatementPrinter {
 
         for (var perf : invoice.performances) {
             // print line for this order
-            int amount = amountFor(perf, playForPerformance(plays, perf));
-            result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience));
+            result.append(String.format("  %s: %s (%s seats)%n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amountFor(perf, playForPerformance(plays, perf))), perf.audience));
         }
 
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(invoice, plays) / 100)));
