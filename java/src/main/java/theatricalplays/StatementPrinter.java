@@ -17,7 +17,7 @@ public class StatementPrinter {
         }
 
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmountFor(new StatementData(invoice, plays)) / 100)));
-        result.append(String.format("You earned %s credits%n", totalVolumeCredits(invoice, plays)));
+        result.append(String.format("You earned %s credits%n", totalVolumeCredits(new StatementData(invoice, plays))));
         return result.toString();
     }
 
@@ -29,11 +29,11 @@ public class StatementPrinter {
         return totalAmount;
     }
 
-    private static int totalVolumeCredits(Invoice invoice, Map<String, Play> plays) {
+    private static int totalVolumeCredits(StatementData statementData) {
         var volumeCredits = 0;
-        for (var perf : invoice.performances) {
+        for (var perf : statementData.getInvoice().performances) {
 
-            volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
+            volumeCredits += volumeCreditsFor(perf, playForPerformance(statementData.getPlays(), perf));
         }
         return volumeCredits;
     }
