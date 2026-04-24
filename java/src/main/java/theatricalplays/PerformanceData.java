@@ -17,7 +17,7 @@ public final class PerformanceData {
         return play.name;
     }
 
-    public int amount() {
+    public int amountFor() {
         return switch (play.type) {
             case "tragedy" -> {
                 int base = 40_000;
@@ -36,7 +36,7 @@ public final class PerformanceData {
         };
     }
 
-    public int volumeCredits() {
+    public int volumeCreditsFor() {
         int result = Math.max(getAudience() - 30, 0);
 
         if ("comedy".equals(play.type)) {

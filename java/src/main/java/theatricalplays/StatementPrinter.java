@@ -20,14 +20,14 @@ public class StatementPrinter {
         for (var perf : statementData.getPerformances()) {
             result.append(String.format("  %s: %s (%s seats)%n",
                     perf.getPlayName(),
-                    formatAsUSD(perf.amount()),
+                    formatAsUSD(perf.amountFor()),
                     perf.getAudience()));
         }
 
         result.append(String.format("Amount owed is %s%n",
-                formatAsUSD(totalAmountFor(statementData))));
+                formatAsUSD(StatementData.totalAmountFor(statementData))));
         result.append(String.format("You earned %s credits%n",
-                totalVolumeCredits(statementData)));
+                StatementData.totalVolumeCredits(statementData)));
 
         return result.toString();
     }
@@ -35,26 +35,6 @@ public class StatementPrinter {
     private static String renderHTML(StatementData statementData) {
         //TODO: build HTML rendering. TEST first!!!
         return "";
-    }
-
-    private static int totalAmountFor(StatementData statementData) {
-        var totalAmount = 0;
-
-        for (var perf : statementData.getPerformances()) {
-            totalAmount += perf.amount();
-        }
-
-        return totalAmount;
-    }
-
-    private static int totalVolumeCredits(StatementData statementData) {
-        var volumeCredits = 0;
-
-        for (var perf : statementData.getPerformances()) {
-            volumeCredits += perf.volumeCredits();
-        }
-
-        return volumeCredits;
     }
 
     private static String formatAsUSD(int amount) {

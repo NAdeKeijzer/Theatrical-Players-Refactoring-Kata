@@ -14,6 +14,26 @@ public final class StatementData {
                 .toList();
     }
 
+    static int totalAmountFor(StatementData statementData) {
+        var totalAmount = 0;
+
+        for (var perf : statementData.getPerformances()) {
+            totalAmount += perf.amountFor();
+        }
+
+        return totalAmount;
+    }
+
+    static int totalVolumeCredits(StatementData statementData) {
+        var volumeCredits = 0;
+
+        for (var perf : statementData.getPerformances()) {
+            volumeCredits += perf.volumeCreditsFor();
+        }
+
+        return volumeCredits;
+    }
+
     public Invoice getInvoice() {
         return invoice;
     }
