@@ -14,7 +14,7 @@ public final class StatementData {
                 .toList();
     }
 
-    public int totalAmountFor() {
+    public int totalAmount() {
         int totalAmount = 0;
 
         for (final PerformanceData perf : performances) {
@@ -24,7 +24,7 @@ public final class StatementData {
         return totalAmount;
     }
 
-    public int totalVolumeCreditsFor() {
+    public int totalVolumeCredits() {
         int volumeCredits = 0;
 
         for (final PerformanceData perf : performances) {
