@@ -14,20 +14,20 @@ public final class StatementData {
                 .toList();
     }
 
-    static int totalAmountFor(StatementData statementData) {
-        var totalAmount = 0;
+    public int totalAmountFor() {
+        int totalAmount = 0;
 
-        for (var perf : statementData.getPerformances()) {
+        for (final PerformanceData perf : performances) {
             totalAmount += perf.amountFor();
         }
 
         return totalAmount;
     }
 
-    static int totalVolumeCredits(StatementData statementData) {
-        var volumeCredits = 0;
+    public int totalVolumeCreditsFor() {
+        int volumeCredits = 0;
 
-        for (var perf : statementData.getPerformances()) {
+        for (final PerformanceData perf : performances) {
             volumeCredits += perf.volumeCreditsFor();
         }
 

@@ -25,9 +25,9 @@ public class StatementPrinter {
         }
 
         result.append(String.format("Amount owed is %s%n",
-                formatAsUSD(StatementData.totalAmountFor(statementData))));
+                formatAsUSD(statementData.totalAmountFor())));
         result.append(String.format("You earned %s credits%n",
-                StatementData.totalVolumeCredits(statementData)));
+                statementData.totalVolumeCreditsFor()));
 
         return result.toString();
     }
