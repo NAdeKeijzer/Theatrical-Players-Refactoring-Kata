@@ -15,23 +15,18 @@ public final class StatementData {
     }
 
     public int totalAmount() {
-        int totalAmount = 0;
-
-        for (final PerformanceData perf : performances) {
-            totalAmount += perf.amountFor();
-        }
-
-        return totalAmount;
+        return performances
+                .stream()
+                .mapToInt(PerformanceData::amountFor)
+                .sum();
     }
 
     public int totalVolumeCredits() {
-        int volumeCredits = 0;
+        return performances
+                .stream()
+                .mapToInt(PerformanceData::volumeCreditsFor)
+                .sum();
 
-        for (final PerformanceData perf : performances) {
-            volumeCredits += perf.volumeCreditsFor();
-        }
-
-        return volumeCredits;
     }
 
     public Invoice getInvoice() {

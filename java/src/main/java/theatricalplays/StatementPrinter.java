@@ -17,17 +17,15 @@ public class StatementPrinter {
                 String.format("Statement for %s%n", statementData.getInvoice().customer)
         );
 
-        for (var perf : statementData.getPerformances()) {
-            result.append(String.format("  %s: %s (%s seats)%n",
-                    perf.getPlayName(),
-                    formatAsUSD(perf.amountFor()),
-                    perf.getAudience()));
-        }
+        statementData.getPerformances().stream().map(perf -> String.format("  %s: %s (%s seats)%n",
+                perf.getPlayName(),
+                formatAsUSD(perf.amountFor()),
+                perf.getAudience())).forEach(result::append);
 
         result.append(String.format("Amount owed is %s%n",
                 formatAsUSD(statementData.totalAmount())));
         result.append(String.format("You earned %s credits%n",
-                statementData.totalVolumeCreditsFor()));
+                statementData.totalVolumeCredits()));
 
         return result.toString();
     }
