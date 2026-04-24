@@ -32,6 +32,11 @@ public class StatementPrinter {
         return result.toString();
     }
 
+    private static String renderHTML(StatementData statementData) {
+        //TODO: build HTML rendering. TEST first!!!
+        return "";
+    }
+
     private static int totalAmountFor(StatementData statementData) {
         var totalAmount = 0;
 
