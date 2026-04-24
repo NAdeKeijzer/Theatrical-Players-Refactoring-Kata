@@ -17,7 +17,7 @@ public final class PerformanceData {
         return play.name;
     }
 
-    public int amountFor() {
+    public int amount() {
         return switch (play.type) {
             case "tragedy" -> {
                 int base = 40_000;
@@ -36,11 +36,13 @@ public final class PerformanceData {
         };
     }
 
-    public int volumeCreditsFor() {
+    public int volumeCredits() {
         int result = Math.max(getAudience() - 30, 0);
 
-        if ("comedy".equals(play.type)) {
-            result += getAudience() / 5;
+        switch (play.type) {
+            case "tragedy" -> {}
+            case "comedy" -> result += Math.floor(performance.audience / 5);
+            default -> throw new IllegalStateException("Unexpected value: " + play.type);
         }
 
         return result;

@@ -19,7 +19,7 @@ public class StatementPrinter {
 
         statementData.getPerformances().stream().map(perf -> String.format("  %s: %s (%s seats)%n",
                 perf.getPlayName(),
-                formatAsUSD(perf.amountFor()),
+                formatAsUSD(perf.amount()),
                 perf.getAudience())).forEach(result::append);
 
         result.append(String.format("Amount owed is %s%n",

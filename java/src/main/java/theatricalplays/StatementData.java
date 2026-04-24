@@ -17,14 +17,14 @@ public final class StatementData {
     public int totalAmount() {
         return performances
                 .stream()
-                .mapToInt(PerformanceData::amountFor)
+                .mapToInt(PerformanceData::amount)
                 .sum();
     }
 
     public int totalVolumeCredits() {
         return performances
                 .stream()
-                .mapToInt(PerformanceData::volumeCreditsFor)
+                .mapToInt(PerformanceData::volumeCredits)
                 .sum();
 
     }
