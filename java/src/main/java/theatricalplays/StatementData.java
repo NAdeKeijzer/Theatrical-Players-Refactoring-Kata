@@ -7,7 +7,7 @@ public final class StatementData {
     private final Invoice invoice;
     private final List<PerformanceData> performances;
 
-    public StatementData(Invoice invoice, Map<String, Play> plays) {
+    public StatementData(final Invoice invoice, final Map<String, Play> plays) {
         this.invoice = invoice;
         this.performances = invoice.performances.stream()
                 .map(perf -> new PerformanceData(perf, plays.get(perf.playID)))

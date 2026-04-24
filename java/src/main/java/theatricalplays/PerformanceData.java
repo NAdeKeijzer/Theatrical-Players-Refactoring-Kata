@@ -4,7 +4,7 @@ public final class PerformanceData {
     private final Performance performance;
     private final Play play;
 
-    public PerformanceData(Performance performance, Play play) {
+    public PerformanceData(final Performance performance, final Play play) {
         this.performance = performance;
         this.play = play;
     }
