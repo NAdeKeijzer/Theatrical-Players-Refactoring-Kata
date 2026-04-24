@@ -1,12 +1,11 @@
 package theatricalplays;
 
 public class Play {
-
-    public String name;
-    public String type;
+    public final String name;
+    public final PlayType type;
 
     public Play(String name, String type) {
         this.name = name;
-        this.type = type;
+        this.type = PlayType.valueOf(type.toUpperCase());
     }
 }

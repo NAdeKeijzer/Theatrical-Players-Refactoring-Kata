@@ -30,6 +30,41 @@ class StatementPrinterTests {
     }
 
     @Test
+    void playWithUnknownTypeThrowsException() {
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new Play("As You Like It", "pastoral")
+        );
+
+        assertEquals(
+                "No enum constant theatricalplays.PlayType.PASTORAL",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void statementWithHistoryPlay() {
+        Map<String, Play> plays = Map.of(
+                "henry-v", new Play("Henry V", "history"));
+
+        Invoice invoice = new Invoice("BigCo", List.of(
+                new Performance("henry-v", 53)));
+
+        StatementPrinter statementPrinter = new StatementPrinter();
+
+        String result = statementPrinter.print(invoice, plays);
+
+        String expected = """
+            Statement for BigCo
+              Henry V: $924.00 (53 seats)
+            Amount owed is $924.00
+            You earned 23 credits
+            """;
+
+        assertEquals(normalize(expected), normalize(result));
+    }
+
+    @Test
     void exampleStatementHtml() {
         Map<String, Play> plays = Map.of(
                 "hamlet",  new Play("Hamlet", "tragedy"),
@@ -63,27 +98,7 @@ class StatementPrinterTests {
         );
     }
 
-    private String normalize(String s) {
+    private static String normalize(String s) {
         return s.replace("\r\n", "\n");
-    }
-
-    @Test
-    void statementWithNewPlayTypes() {
-        Map<String, Play> plays = Map.of(
-                "henry-v", new Play("Henry V", "history"),
-                "as-like", new Play("As You Like It", "pastoral"));
-
-        Invoice invoice = new Invoice("BigCo", List.of(
-                new Performance("henry-v", 53),
-                new Performance("as-like", 55)));
-
-        StatementPrinter statementPrinter = new StatementPrinter();
-
-        IllegalArgumentException exception = Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> statementPrinter.print(invoice, plays)
-        );
-
-        assertEquals("unknown type: history", exception.getMessage());
     }
 }
