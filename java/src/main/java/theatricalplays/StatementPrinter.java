@@ -12,6 +12,12 @@ public class StatementPrinter {
         return renderPlainText(statementData);
     }
 
+    public String printHtml(Invoice invoice, Map<String, Play> plays) {
+        StatementData statementData = new StatementData(invoice, plays);
+
+        return renderHTML(statementData);
+    }
+
     private static String renderPlainText(StatementData statementData) {
         StringBuilder result = new StringBuilder(
                 String.format("Statement for %s%n", statementData.getInvoice().customer)
@@ -31,8 +37,29 @@ public class StatementPrinter {
     }
 
     private static String renderHTML(StatementData statementData) {
-        //TODO: build HTML rendering. TEST first!!!
-        return "";
+        StringBuilder result = new StringBuilder(
+                String.format("<h1>Statement for %s</h1>%n", statementData.getInvoice().customer)
+        );
+
+        result.append("<table>\n");
+        result.append("<tr><th>play</th><th>seats</th><th>cost</th></tr>\n");
+
+        for (var perf : statementData.getPerformances()) {
+            result.append(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>%n",
+                    perf.getPlayName(),
+                    perf.getAudience(),
+                    formatAsUSD(perf.amount())));
+        }
+
+        result.append("</table>\n");
+
+        result.append(String.format("<p>Amount owed is <em>%s</em></p>%n",
+                formatAsUSD(statementData.totalAmount())));
+        result.append(String.format("<p>You earned <em>%s</em> credits</p>%n",
+                statementData.totalVolumeCredits()));
+
+        return result.toString();
+
     }
 
     private static String formatAsUSD(int amount) {
