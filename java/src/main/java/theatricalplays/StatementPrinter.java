@@ -8,8 +8,11 @@ public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
         StatementData statementData = new StatementData(invoice, plays);
-        NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
+        return renderPlainText(statementData);
+    }
+
+    private static String renderPlainText(StatementData statementData) {
         StringBuilder result = new StringBuilder(
                 String.format("Statement for %s%n", statementData.getInvoice().customer)
         );
@@ -17,12 +20,12 @@ public class StatementPrinter {
         for (var perf : statementData.getPerformances()) {
             result.append(String.format("  %s: %s (%s seats)%n",
                     perf.getPlayName(),
-                    formatAsUSD(frmt, perf.amount()),
+                    formatAsUSD(perf.amount()),
                     perf.getAudience()));
         }
 
         result.append(String.format("Amount owed is %s%n",
-                formatAsUSD(frmt, totalAmountFor(statementData))));
+                formatAsUSD(totalAmountFor(statementData))));
         result.append(String.format("You earned %s credits%n",
                 totalVolumeCredits(statementData)));
 
@@ -49,7 +52,7 @@ public class StatementPrinter {
         return volumeCredits;
     }
 
-    private static String formatAsUSD(NumberFormat frmt, int amount) {
-        return frmt.format(amount / 100);
+    private static String formatAsUSD(int amount) {
+        return NumberFormat.getCurrencyInstance(Locale.US).format(amount / 100);
     }
 }

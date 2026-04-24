@@ -9,14 +9,6 @@ public final class PerformanceData {
         this.play = play;
     }
 
-    public Performance getPerformance() {
-        return performance;
-    }
-
-    public Play getPlay() {
-        return play;
-    }
-
     public int getAudience() {
         return performance.audience;
     }
